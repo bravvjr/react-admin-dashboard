@@ -265,7 +265,7 @@ const Dashboard = () => {
           backgroundColor={colors.primary[400]}
           padding="30px"
         >
-          <Typography
+          {/* <Typography
             variant="h5"
             fontWeight="600"
             sx={{ marginBottom: "15px" }}
@@ -274,7 +274,7 @@ const Dashboard = () => {
           </Typography>
           <Box height="200px">
             <GeographyChart isDashboard={true} />
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </Box>
