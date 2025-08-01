@@ -17,7 +17,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import LaptopWindowsIcon from '@mui/icons-material/LaptopWindows';
 import InventoryIcon from '@mui/icons-material/Inventory';
-// import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';// import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -166,6 +166,13 @@ const Sidebar = () => {
               title="Add Laptop"
               to="/laptop"
               icon={<LaptopWindowsIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Trade-in"  
+              to="/tradein"
+              icon={<CurrencyExchangeIcon/>}
               selected={selected}
               setSelected={setSelected}
             />

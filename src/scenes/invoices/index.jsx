@@ -7,11 +7,12 @@ import Header from "../../components/Header";
 const Invoices = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id", headerName: "Invoice ID", width: 100 },
     {
-      field: "name",
-      headerName: "Name",
+      field: "customerName",
+      headerName: "Customer Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
@@ -21,17 +22,32 @@ const Invoices = () => {
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "items",
+      headerName: "Items Purchased",
       flex: 1,
-    }, 
+      renderCell: (params) => (
+        <Typography>
+          {params.row.items.join(", ")}
+        </Typography>
+      ),
+    },
     {
-      field: "cost",
-      headerName: "Cost",
+      field: "total",
+      headerName: "Total (KSh)",
       flex: 1,
       renderCell: (params) => (
         <Typography color={colors.greenAccent[500]}>
-          ${params.row.cost}
+          KSh {params.row.total.toLocaleString()}
+        </Typography>
+      ),
+    },
+    {
+      field: "paymentStatus",
+      headerName: "Payment Status",
+      flex: 1,
+      renderCell: (params) => (
+        <Typography color={params.row.paymentStatus === "Paid" ? colors.greenAccent[400] : "#f44336"}>
+          {params.row.paymentStatus}
         </Typography>
       ),
     },
@@ -44,7 +60,7 @@ const Invoices = () => {
 
   return (
     <Box m="20px">
-      <Header title="INVOICES" subtitle="List of Invoice Balances" />
+      <Header title="INVOICES" subtitle="Customer Invoices & Payment Status" />
       <Box
         m="40px 0 0 0"
         height="75vh"
