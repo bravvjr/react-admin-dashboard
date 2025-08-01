@@ -784,165 +784,51 @@ export const mockPieData = [
 
 export const mockLineData = [
   {
-    id: "japan",
-    color: tokens("dark").greenAccent[500],
+    id: "HP",
+    color: "hsl(229, 70%, 50%)",
     data: [
-      {
-        x: "plane",
-        y: 101,
-      },
-      {
-        x: "helicopter",
-        y: 75,
-      },
-      {
-        x: "boat",
-        y: 36,
-      },
-      {
-        x: "train",
-        y: 216,
-      },
-      {
-        x: "subway",
-        y: 35,
-      },
-      {
-        x: "bus",
-        y: 236,
-      },
-      {
-        x: "car",
-        y: 88,
-      },
-      {
-        x: "moto",
-        y: 232,
-      },
-      {
-        x: "bicycle",
-        y: 281,
-      },
-      {
-        x: "horse",
-        y: 1,
-      },
-      {
-        x: "skateboard",
-        y: 35,
-      },
-      {
-        x: "others",
-        y: 14,
-      },
+      { x: "Jan", y: 120000 },
+      { x: "Feb", y: 150000 },
+      { x: "Mar", y: 98000 },
+      { x: "Apr", y: 175000 },
+      { x: "May", y: 142000 },
+      { x: "Jun", y: 210000 },
     ],
   },
   {
-    id: "france",
-    color: tokens("dark").blueAccent[300],
+    id: "Dell",
+    color: "hsl(296, 70%, 50%)",
     data: [
-      {
-        x: "plane",
-        y: 212,
-      },
-      {
-        x: "helicopter",
-        y: 190,
-      },
-      {
-        x: "boat",
-        y: 270,
-      },
-      {
-        x: "train",
-        y: 9,
-      },
-      {
-        x: "subway",
-        y: 75,
-      },
-      {
-        x: "bus",
-        y: 175,
-      },
-      {
-        x: "car",
-        y: 33,
-      },
-      {
-        x: "moto",
-        y: 189,
-      },
-      {
-        x: "bicycle",
-        y: 97,
-      },
-      {
-        x: "horse",
-        y: 87,
-      },
-      {
-        x: "skateboard",
-        y: 299,
-      },
-      {
-        x: "others",
-        y: 251,
-      },
+      { x: "Jan", y: 85000 },
+      { x: "Feb", y: 112000 },
+      { x: "Mar", y: 92000 },
+      { x: "Apr", y: 135000 },
+      { x: "May", y: 118000 },
+      { x: "Jun", y: 165000 },
     ],
   },
   {
-    id: "us",
-    color: tokens("dark").redAccent[200],
+    id: "Lenovo",
+    color: "hsl(97, 70%, 50%)",
     data: [
-      {
-        x: "plane",
-        y: 191,
-      },
-      {
-        x: "helicopter",
-        y: 136,
-      },
-      {
-        x: "boat",
-        y: 91,
-      },
-      {
-        x: "train",
-        y: 190,
-      },
-      {
-        x: "subway",
-        y: 211,
-      },
-      {
-        x: "bus",
-        y: 152,
-      },
-      {
-        x: "car",
-        y: 189,
-      },
-      {
-        x: "moto",
-        y: 152,
-      },
-      {
-        x: "bicycle",
-        y: 8,
-      },
-      {
-        x: "horse",
-        y: 197,
-      },
-      {
-        x: "skateboard",
-        y: 107,
-      },
-      {
-        x: "others",
-        y: 170,
-      },
+      { x: "Jan", y: 68000 },
+      { x: "Feb", y: 75000 },
+      { x: "Mar", y: 82000 },
+      { x: "Apr", y: 98000 },
+      { x: "May", y: 105000 },
+      { x: "Jun", y: 125000 },
+    ],
+  },
+  {
+    id: "Apple",
+    color: "hsl(340, 70%, 50%)",
+    data: [
+      { x: "Jan", y: 185000 },
+      { x: "Feb", y: 210000 },
+      { x: "Mar", y: 165000 },
+      { x: "Apr", y: 230000 },
+      { x: "May", y: 195000 },
+      { x: "Jun", y: 275000 },
     ],
   },
 ];

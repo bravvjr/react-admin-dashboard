@@ -7,6 +7,28 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  // Custom Y-axis tick formatter
+  const formatYAxis = (value) => {
+    if (value >= 1000000) return `${(value/1000000).toFixed(0)}M`;
+    if (value >= 1000) return `${(value/1000).toFixed(0)}K`;
+    return value;
+  };
+
+  // Calculate appropriate tick values based on data range
+  const getYTickValues = (data) => {
+    const maxValue = Math.max(...data.flatMap(series => 
+      series.data.map(item => item.y)
+    ));
+    const interval = maxValue <= 100000 ? 20000 : 
+                    maxValue <= 300000 ? 50000 : 
+                    100000;
+    const tickValues = [];
+    for (let i = 0; i <= maxValue + interval; i += interval) {
+      tickValues.push(i);
+    }
+    return tickValues;
+  };
+
   return (
     <ResponsiveLine
       data={data}
@@ -29,6 +51,7 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
             },
             text: {
               fill: colors.grey[100],
+              fontSize: 11,
             },
           },
         },
@@ -39,45 +62,57 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
         },
         tooltip: {
           container: {
-            color: colors.primary[500],
+            background: colors.primary[400],
+            color: colors.grey[100],
+            fontSize: 12,
+            borderRadius: "4px",
+            boxShadow: theme.shadows[2],
           },
         },
       }}
-      colors={isDashboard ? { datum: "color" } : { scheme: "nivo" }} // added
+      colors={isCustomLineColors ? { datum: "color" } : { scheme: "nivo" }}
       margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
-        min: "auto",
+        min: 0,
         max: "auto",
-        stacked: true,
+        stacked: false,
         reverse: false,
       }}
-      yFormat=" >-.2f"
-      curve="catmullRom"
+      yFormat={(value) =>
+        new Intl.NumberFormat("en-KE", {
+          style: "currency",
+          currency: "KES",
+          minimumFractionDigits: 0,
+        }).format(value)
+      }
+      curve="monotoneX"
       axisTop={null}
       axisRight={null}
       axisBottom={{
         orient: "bottom",
-        tickSize: 0,
+        tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : "transportation", // added
+        legend: isDashboard ? undefined : "Month",
         legendOffset: 36,
         legendPosition: "middle",
       }}
       axisLeft={{
         orient: "left",
-        tickValues: 5, // added
-        tickSize: 3,
+        tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : "count", // added
-        legendOffset: -40,
+        tickValues: getYTickValues(data), // Custom tick values
+        format: formatYAxis, // Simplified formatting
+        legend: isDashboard ? undefined : "Revenue (KES)",
+        legendOffset: -50,
         legendPosition: "middle",
       }}
       enableGridX={false}
-      enableGridY={false}
+      enableGridY={true}
+      gridYValues={getYTickValues(data)} // Align grid with ticks
       pointSize={8}
       pointColor={{ theme: "background" }}
       pointBorderWidth={2}
@@ -110,6 +145,26 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
           ],
         },
       ]}
+      tooltip={({ point }) => (
+        <div
+          style={{
+            background: colors.primary[400],
+            padding: "8px 12px",
+            border: `1px solid ${colors.grey[100]}`,
+            borderRadius: "4px",
+            boxShadow: theme.shadows[3],
+          }}
+        >
+          <strong>{point.serieId}</strong>
+          <br />
+          {point.data.x}:{" "}
+          {new Intl.NumberFormat("en-KE", {
+            style: "currency",
+            currency: "KES",
+            minimumFractionDigits: 0,
+          }).format(point.data.y)}
+        </div>
+      )}
     />
   );
 };

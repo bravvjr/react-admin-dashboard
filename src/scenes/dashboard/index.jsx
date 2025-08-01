@@ -143,14 +143,14 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                Profit by Brand
               </Typography>
               <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                $59,342.32
+                KES 280,000
               </Typography>
             </Box>
             <Box>
@@ -166,55 +166,113 @@ const Dashboard = () => {
           </Box>
         </Box>
         <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-          overflow="auto"
+  gridColumn="span 4"
+  gridRow="span 2"
+  backgroundColor={colors.primary[400]}
+  overflow="auto"
+  borderRadius="4px"
+  boxShadow={theme.shadows[2]}
+>
+  <Box
+    display="flex"
+    justifyContent="space-between"
+    alignItems="center"
+    borderBottom={`4px solid ${colors.primary[500]}`}
+    p="15px"
+  >
+    <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
+      Recent Transactions
+    </Typography>
+  </Box>
+  {[
+    {
+      txId: "TX-KE-78901",
+      user: "Wanjiku Mwangi",
+      date: "15 Jul 2023",
+      cost: 24500,
+      product: "HP EliteBook"
+    },
+    {
+      txId: "TX-KE-78902",
+      user: "Kamau Otieno",
+      date: "14 Jul 2023",
+      cost: 187000,
+      product: "MacBook Pro M2"
+    },
+    {
+      txId: "TX-KE-78903",
+      user: "Amina Hassan",
+      date: "14 Jul 2023",
+      cost: 62500,
+      product: "Dell XPS 13"
+    },
+    {
+      txId: "TX-KE-78904",
+      user: "Juma Wanyama",
+      date: "13 Jul 2023",
+      cost: 42000,
+      product: "Lenovo ThinkPad"
+    },
+    {
+      txId: "TX-KE-78905",
+      user: "Nyambura Kariuki",
+      date: "12 Jul 2023",
+      cost: 83500,
+      product: "Asus ZenBook"
+    },
+    {
+      txId: "TX-KE-78906",
+      user: "Omondi Okoth",
+      date: "11 Jul 2023",
+      cost: 112000,
+      product: "HP Spectre x360"
+    },
+  ].map((transaction, i) => (
+    <Box
+      key={`${transaction.txId}-${i}`}
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      borderBottom={`1px solid ${colors.primary[500]}`}
+      p="15px"
+    >
+      <Box width="30%">
+        <Typography
+          color={colors.greenAccent[500]}
+          variant="h5"
+          fontWeight="600"
+          fontSize="0.9rem"
         >
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            borderBottom={`4px solid ${colors.primary[500]}`}
-            colors={colors.grey[100]}
-            p="15px"
-          >
-            <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
-            </Typography>
-          </Box>
-          {mockTransactions.map((transaction, i) => (
-            <Box
-              key={`${transaction.txId}-${i}`}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              borderBottom={`4px solid ${colors.primary[500]}`}
-              p="15px"
-            >
-              <Box>
-                <Typography
-                  color={colors.greenAccent[500]}
-                  variant="h5"
-                  fontWeight="600"
-                >
-                  {transaction.txId}
-                </Typography>
-                <Typography color={colors.grey[100]}>
-                  {transaction.user}
-                </Typography>
-              </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
-              <Box
-                backgroundColor={colors.greenAccent[500]}
-                p="5px 10px"
-                borderRadius="4px"
-              >
-                ${transaction.cost}
-              </Box>
-            </Box>
-          ))}
-        </Box>
+          {transaction.txId}
+        </Typography>
+        <Typography color={colors.grey[100]} fontSize="0.8rem">
+          {transaction.user}
+        </Typography>
+      </Box>
+      <Box width="30%" color={colors.grey[100]} fontSize="0.8rem">
+        {transaction.product}
+      </Box>
+      <Box width="20%" color={colors.grey[100]} fontSize="0.8rem">
+        {transaction.date}
+      </Box>
+      <Box
+        width="20%"
+        backgroundColor={colors.greenAccent[500]}
+        p="5px 10px"
+        borderRadius="4px"
+        textAlign="center"
+        fontSize="0.9rem"
+        fontWeight="600"
+      >
+        {new Intl.NumberFormat('en-KE', {
+          style: 'currency',
+          currency: 'KES',
+          minimumFractionDigits: 0
+        }).format(transaction.cost)}
+      </Box>
+    </Box>
+  ))}
+</Box>
 
         {/* ROW 3 */}
         <Box
