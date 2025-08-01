@@ -1,6 +1,7 @@
 import { Box, Button, IconButton, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useState } from "react";
@@ -11,14 +12,22 @@ const LaptopInventory = () => {
   const colors = tokens(theme.palette.mode);
   const [laptops, setLaptops] = useState(initialData);
   const [selectionModel, setSelectionModel] = useState([]);
+  const [editRow, setEditRow] = useState(null);
 
   const handleDeleteSelected = () => {
     const updatedRows = laptops.filter((row) => !selectionModel.includes(row.id));
     setLaptops(updatedRows);
+    setSelectionModel([]);
   };
 
+  const handleUpdate = (id) => {
+    setEditRow(id);
+    // You would typically open a modal/dialog here with the row data
+    console.log("Editing laptop with ID:", id);
+    // For demo, we'll just log to console
+  };
 
- const columns = [
+  const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
     { field: "brand", headerName: "Brand", flex: 1 },
     { field: "model", headerName: "Model", flex: 1.5 },
@@ -40,16 +49,25 @@ const LaptopInventory = () => {
     {
       field: "actions",
       headerName: "Actions",
-      flex: 0.8,
+      flex: 1.2,
       renderCell: (params) => (
-        <IconButton
-          color="error"
-          onClick={() => {
-            setLaptops((prev) => prev.filter((row) => row.id !== params.id));
-          }}
-        >
-          <DeleteIcon />
-        </IconButton>
+        <Box>
+          <IconButton
+            color="secondary"
+            onClick={() => handleUpdate(params.id)}
+            sx={{ mr: 1 }}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            color="error"
+            onClick={() => {
+              setLaptops((prev) => prev.filter((row) => row.id !== params.id));
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Box>
       ),
     },
   ];
@@ -64,8 +82,9 @@ const LaptopInventory = () => {
           color="error"
           onClick={handleDeleteSelected}
           disabled={selectionModel.length === 0}
+          startIcon={<DeleteIcon />}
         >
-          Delete Selected
+          Delete Selected ({selectionModel.length})
         </Button>
       </Box>
 
@@ -101,10 +120,11 @@ const LaptopInventory = () => {
           rows={laptops}
           columns={columns}
           checkboxSelection
+          disableRowSelectionOnClick
           onRowSelectionModelChange={(newSelection) => {
             setSelectionModel(newSelection);
           }}
-          selectionModel={selectionModel}
+          rowSelectionModel={selectionModel}
           components={{ Toolbar: GridToolbar }}
           componentsProps={{
             toolbar: {
@@ -112,6 +132,7 @@ const LaptopInventory = () => {
               quickFilterProps: { debounceMs: 500 },
             },
           }}
+          getRowId={(row) => row.id}
         />
       </Box>
     </Box>
