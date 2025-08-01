@@ -12,7 +12,7 @@ const LaptopInventory = () => {
   const colors = tokens(theme.palette.mode);
   const [laptops, setLaptops] = useState(initialData);
   const [selectionModel, setSelectionModel] = useState([]);
-  const [editRow, setEditRow] = useState(null);
+  const [setEditRow] = useState(null);
 
   const handleDeleteSelected = () => {
     const updatedRows = laptops.filter((row) => !selectionModel.includes(row.id));
