@@ -1,4 +1,17 @@
-import { Box, Button, TextField, MenuItem, Radio, RadioGroup, FormControlLabel, FormLabel, FormControl, Divider } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormLabel,
+  FormControl,
+  Divider,
+} from "@mui/material";
+import { tokens } from "../../theme";
+import { useTheme } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -6,31 +19,92 @@ import Header from "../../components/Header";
 
 const AddLaptop = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   // Mock data - will be replaced with your actual data source later
-  const brands = ["Dell", "HP", "Lenovo", "Asus", "Acer", "Apple", "MSI", "Razer"];
-  const processorNames = ["i3", "i5", "i7", "i9", "Ryzen 3", "Ryzen 5", "Ryzen 7", "Ryzen 9", "M1", "M2"];
-  const processorGenerations = ["7th Gen", "8th Gen", "9th Gen", "10th Gen", "11th Gen", "12th Gen"];
+  const brands = [
+    "Dell",
+    "HP",
+    "Lenovo",
+    "Asus",
+    "Acer",
+    "Apple",
+    "MSI",
+    "Razer",
+  ];
+  const processorNames = [
+    "i3",
+    "i5",
+    "i7",
+    "i9",
+    "Ryzen 3",
+    "Ryzen 5",
+    "Ryzen 7",
+    "Ryzen 9",
+    "M1",
+    "M2",
+  ];
+  const processorGenerations = [
+    "7th Gen",
+    "8th Gen",
+    "9th Gen",
+    "10th Gen",
+    "11th Gen",
+    "12th Gen",
+  ];
   const ramOptions = ["4GB", "8GB", "16GB", "32GB", "64GB"];
-  const storageOptions = ["128GB SSD", "256GB SSD", "512GB SSD", "1TB SSD", "2TB SSD", "1TB HDD", "2TB HDD"];
-  const conditions = ["New", "Refurbished", "Used - Like New", "Used - Good", "Used - Fair"];
+  const storageOptions = [
+    "128GB SSD",
+    "256GB SSD",
+    "512GB SSD",
+    "1TB SSD",
+    "2TB SSD",
+    "1TB HDD",
+    "2TB HDD",
+  ];
+  const conditions = [
+    "New",
+    "Refurbished",
+    "Used - Like New",
+    "Used - Good",
+    "Used - Fair",
+  ];
 
   const handleFormSubmit = (values) => {
     console.log(values);
     // Format GPU data before submission if needed
     const formattedValues = {
       ...values,
-      gpu: values.gpuType === "integrated" 
-        ? "Integrated Graphics" 
-        : `${values.gpuManufacturer} ${values.gpuModel}`
+      gpu:
+        values.gpuType === "integrated"
+          ? "Integrated Graphics"
+          : `${values.gpuManufacturer} ${values.gpuModel}`,
     };
     console.log(formattedValues);
   };
 
   return (
-    <Box m="20px">
-      <Header title="ADD LAPTOP" subtitle="Add New Laptop to Inventory" />
-
+  <Box m="20px">
+    <Header title="ADD LAPTOP" subtitle="Add New Laptop to Inventory" />
+    
+    <Box
+      sx={{
+        height: { xs: "calc(100vh - 100px)", md: "75vh" },
+        overflowY: "auto",
+        pr: "10px",
+        "&::-webkit-scrollbar": {
+          width: "8px",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: colors.primary[400],
+        },
+        "&::-webkit-scrollbar-thumb": {
+          background: colors.greenAccent[500],
+          borderRadius: "4px",
+        },
+      }}
+    >
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -125,7 +199,7 @@ const AddLaptop = () => {
 
               {/* Processor Section */}
               <Divider sx={{ gridColumn: "span 4", my: 2 }}>Processor</Divider>
-              
+
               <TextField
                 select
                 fullWidth
@@ -155,8 +229,12 @@ const AddLaptop = () => {
                 onChange={handleChange}
                 value={values.processorGeneration}
                 name="processorGeneration"
-                error={!!touched.processorGeneration && !!errors.processorGeneration}
-                helperText={touched.processorGeneration && errors.processorGeneration}
+                error={
+                  !!touched.processorGeneration && !!errors.processorGeneration
+                }
+                helperText={
+                  touched.processorGeneration && errors.processorGeneration
+                }
                 sx={{ gridColumn: "span 2" }}
               >
                 {processorGenerations.map((gen) => (
@@ -167,8 +245,10 @@ const AddLaptop = () => {
               </TextField>
 
               {/* Memory & Storage */}
-              <Divider sx={{ gridColumn: "span 4", my: 2 }}>Memory & Storage</Divider>
-              
+              <Divider sx={{ gridColumn: "span 4", my: 2 }}>
+                Memory & Storage
+              </Divider>
+
               <TextField
                 select
                 fullWidth
@@ -211,7 +291,7 @@ const AddLaptop = () => {
 
               {/* GPU Section */}
               <Divider sx={{ gridColumn: "span 4", my: 2 }}>Graphics</Divider>
-              
+
               <FormControl component="fieldset" sx={{ gridColumn: "span 4" }}>
                 <FormLabel component="legend">GPU Type</FormLabel>
                 <RadioGroup
@@ -244,8 +324,12 @@ const AddLaptop = () => {
                     onChange={handleChange}
                     value={values.gpuManufacturer}
                     name="gpuManufacturer"
-                    error={!!touched.gpuManufacturer && !!errors.gpuManufacturer}
-                    helperText={touched.gpuManufacturer && errors.gpuManufacturer}
+                    error={
+                      !!touched.gpuManufacturer && !!errors.gpuManufacturer
+                    }
+                    helperText={
+                      touched.gpuManufacturer && errors.gpuManufacturer
+                    }
                     sx={{ gridColumn: "span 2" }}
                   >
                     <MenuItem value="Nvidia">Nvidia</MenuItem>
@@ -271,8 +355,10 @@ const AddLaptop = () => {
               )}
 
               {/* Battery & Additional Info */}
-              <Divider sx={{ gridColumn: "span 4", my: 2 }}>Additional Information</Divider>
-              
+              <Divider sx={{ gridColumn: "span 4", my: 2 }}>
+                Additional Information
+              </Divider>
+
               <FormControl component="fieldset" sx={{ gridColumn: "span 4" }}>
                 <FormLabel component="legend">Includes Battery?</FormLabel>
                 <RadioGroup
@@ -286,11 +372,7 @@ const AddLaptop = () => {
                     control={<Radio />}
                     label="Yes"
                   />
-                  <FormControlLabel
-                    value="no"
-                    control={<Radio />}
-                    label="No"
-                  />
+                  <FormControlLabel value="no" control={<Radio />} label="No" />
                 </RadioGroup>
               </FormControl>
 
@@ -356,13 +438,19 @@ const AddLaptop = () => {
             </Box>
 
             <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained" size="large">
+              <Button
+                type="submit"
+                color="secondary"
+                variant="contained"
+                size="large"
+              >
                 Add Laptop(s) to Inventory
               </Button>
             </Box>
           </form>
         )}
       </Formik>
+      </Box>
     </Box>
   );
 };
@@ -371,15 +459,22 @@ const checkoutSchema = yup.object().shape({
   brand: yup.string().required("Brand is required"),
   model: yup.string().required("Model is required"),
   condition: yup.string().required("Condition is required"),
-  quantity: yup.number().required("Quantity is required").min(1, "Must be at least 1"),
+  quantity: yup
+    .number()
+    .required("Quantity is required")
+    .min(1, "Must be at least 1"),
   processorName: yup.string().required("Processor name is required"),
-  processorGeneration: yup.string().required("Processor generation is required"),
+  processorGeneration: yup
+    .string()
+    .required("Processor generation is required"),
   ram: yup.string().required("RAM specification is required"),
   storage: yup.string().required("Storage specification is required"),
   gpuType: yup.string().required("GPU type is required"),
   gpuManufacturer: yup.string().when("gpuType", {
     is: "dedicated",
-    then: yup.string().required("GPU manufacturer is required for dedicated graphics"),
+    then: yup
+      .string()
+      .required("GPU manufacturer is required for dedicated graphics"),
   }),
   gpuModel: yup.string().when("gpuType", {
     is: "dedicated",
@@ -388,7 +483,10 @@ const checkoutSchema = yup.object().shape({
   hasBattery: yup.string().required("Please specify battery status"),
   screenSize: yup.string().required("Screen size is required"),
   resolution: yup.string().required("Resolution is required"),
-  price: yup.number().required("Price is required").min(0, "Price cannot be negative"),
+  price: yup
+    .number()
+    .required("Price is required")
+    .min(0, "Price cannot be negative"),
   serialNumbers: yup.string().when("quantity", {
     is: (quantity) => quantity > 1,
     then: yup.string().required("Please enter serial numbers for all units"),

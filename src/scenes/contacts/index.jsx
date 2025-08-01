@@ -1,29 +1,51 @@
+// suppliers.jsx
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
+import { mockDataSuppliers } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
-const Contacts = () => {
+const Suppliers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "supplierCode", headerName: "Supplier Code", flex: 1 },
     {
       field: "name",
-      headerName: "Name",
-      flex: 1,
+      headerName: "Supplier Name",
+      flex: 1.5,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "type",
+      headerName: "Type",
+      flex: 1,
+      renderCell: (params) => (
+        <Box
+          sx={{
+            p: "5px 10px",
+            borderRadius: "4px",
+            backgroundColor:
+              params.value === "Local"
+                ? colors.greenAccent[600] + "40" // 40% opacity
+                : colors.blueAccent[600] + "40",
+            color:
+              params.value === "Local"
+                ? colors.greenAccent[500]
+                : colors.blueAccent[500],
+          }}
+        >
+          {params.value}
+        </Box>
+      ),
+    },
+    {
+      field: "contactPerson",
+      headerName: "Contact Person",
+      flex: 1,
     },
     {
       field: "phone",
@@ -33,30 +55,32 @@ const Contacts = () => {
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      flex: 1.5,
     },
     {
-      field: "address",
-      headerName: "Address",
+      field: "leadTime",
+      headerName: "Lead Time",
       flex: 1,
+      valueFormatter: (params) => `${params.value} days`,
     },
     {
-      field: "city",
-      headerName: "City",
+      field: "rating",
+      headerName: "Rating",
       flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
+      type: "number",
+      renderCell: (params) => (
+        <Box sx={{ color: colors.greenAccent[500] }}>
+          {params.value}/5
+        </Box>
+      ),
     },
   ];
 
   return (
     <Box m="20px">
       <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
+        title="SUPPLIERS"
+        subtitle="List of Our Trusted Suppliers"
       />
       <Box
         m="40px 0 0 0"
@@ -91,7 +115,7 @@ const Contacts = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={mockDataSuppliers}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
@@ -100,4 +124,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default Suppliers;

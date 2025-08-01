@@ -190,6 +190,45 @@ export const themeSettings = (mode) => {
         fontSize: 14,
       },
     },
+    components: {
+      MuiRadio: {
+        styleOverrides: {
+          root: {
+            color: colors.grey[100], // Default/unchecked color
+            "&.Mui-checked": {
+              color: colors.greenAccent[500], // Checked color (matches scrollbar)
+            },
+          },
+        },
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            "& label.Mui-focused": {
+              color: mode === "dark" ? colors.grey[100] : colors.grey[700],
+            },
+            "& .MuiInput-underline:after": {
+              borderBottomColor: colors.greenAccent[500],
+            },
+            "& .MuiOutlinedInput-root": {
+              "&.Mui-focused fieldset": {
+                borderColor: colors.greenAccent[500],
+              },
+            },
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color: mode === "dark" ? colors.grey[100] : colors.grey[700],
+            "&.Mui-focused": {
+              color: mode === "dark" ? colors.grey[100] : colors.grey[700],
+            },
+          },
+        },
+      },
+    },
   };
 };
 

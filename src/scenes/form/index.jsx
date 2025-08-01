@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, MenuItem } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -11,9 +11,19 @@ const Form = () => {
     console.log(values);
   };
 
+  // Access level options
+  const accessLevels = [
+    { value: "admin", label: "Administrator" },
+    { value: "manager", label: "Manager" },
+    { value: "sales", label: "Sales Staff" },
+    { value: "technician", label: "Technician" },
+    { value: "procurement", label: "Procurement Staff" },
+    { value: "warehouse", label: "Warehouse Staff" },
+  ];
+
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
+      <Header title="CREATE USER" subtitle="Create a New Staff Profile" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -80,45 +90,65 @@ const Form = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Contact Number"
+                label="Phone Number"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
+                value={values.phone}
+                name="phone"
+                error={!!touched.phone && !!errors.phone}
+                helperText={touched.phone && errors.phone}
+                placeholder="+254 700 123456"
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                select
+                fullWidth
+                variant="filled"
+                label="Access Level"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.accessLevel}
+                name="accessLevel"
+                error={!!touched.accessLevel && !!errors.accessLevel}
+                helperText={touched.accessLevel && errors.accessLevel}
+                sx={{ gridColumn: "span 4" }}
+              >
+                {accessLevels.map((level) => (
+                  <MenuItem key={level.value} value={level.value}>
+                    {level.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Position/Title"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.position}
+                name="position"
+                error={!!touched.position && !!errors.position}
+                helperText={touched.position && errors.position}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Address 1"
+                label="Physical Address"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
+                value={values.address}
+                name="address"
+                error={!!touched.address && !!errors.address}
+                helperText={touched.address && errors.address}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                Create Staff Account
               </Button>
             </Box>
           </form>
@@ -128,27 +158,30 @@ const Form = () => {
   );
 };
 
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+// Kenyan phone number validation regex
+const kenyaPhoneRegExp = /^(\+?254|0)[17]\d{8}$/;
 
 const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
+  firstName: yup.string().required("First name is required"),
+  lastName: yup.string().required("Last name is required"),
+  email: yup.string().email("Invalid email").required("Email is required"),
+  phone: yup
     .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
+    .matches(kenyaPhoneRegExp, "Enter a valid Kenyan phone number")
+    .required("Phone number is required"),
+  accessLevel: yup.string().required("Access level is required"),
+  position: yup.string().required("Position is required"),
+  address: yup.string().required("Address is required"),
 });
+
 const initialValues = {
   firstName: "",
   lastName: "",
   email: "",
-  contact: "",
-  address1: "",
-  address2: "",
+  phone: "",
+  accessLevel: "",
+  position: "",
+  address: "",
 };
 
 export default Form;
