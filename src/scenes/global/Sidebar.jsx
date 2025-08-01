@@ -16,6 +16,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 // import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import LaptopWindowsIcon from '@mui/icons-material/LaptopWindows';
+import InventoryIcon from '@mui/icons-material/Inventory';
 // import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -133,6 +134,13 @@ const Sidebar = () => {
             >
               Data
             </Typography>
+            <Item
+              title="Inventory"
+              to="/inventory"
+              icon={<InventoryIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Item
               title="Manage Team"
               to="/team"

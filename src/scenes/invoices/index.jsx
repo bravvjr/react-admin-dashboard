@@ -24,7 +24,7 @@ const Invoices = () => {
       field: "email",
       headerName: "Email",
       flex: 1,
-    },
+    }, 
     {
       field: "cost",
       headerName: "Cost",
